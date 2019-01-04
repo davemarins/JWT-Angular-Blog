@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Newsletter } from '../newsletter';
-import { Article } from '../article';
+import { Newsletter } from '../Newsletter';
+import { Article } from '../Article';
 
 @Injectable({
   providedIn: 'root'

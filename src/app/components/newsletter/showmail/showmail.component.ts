@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DataService } from 'src/app/services/data.service';
-import { Newsletter } from 'src/app/newsletter';
+import { Newsletter } from 'src/app/Newsletter';
 
 @Component({
   selector: 'app-showmail',

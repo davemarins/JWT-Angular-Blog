@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JarwisService } from 'src/app/services/jarwis.service';
 import { DataService } from 'src/app/services/data.service';
-import { Newsletter } from 'src/app/newsletter';
+import { Newsletter } from 'src/app/Newsletter';
 import { Router } from '@angular/router';
 
 @Component({

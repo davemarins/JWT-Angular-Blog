@@ -1,17 +1,25 @@
 <br>
 <h3>Nuovo articolo</h3>
 <button type="submit" class="btn btn-primary float-right" (click)="openModalIfEdited(content2)">Indietro</button>
+<button type="submit" class="btn btn-danger float-left" *ngIf="isDraft" (click)="openModalDeleteDraft(content3)">Cancella bozza</button>
 <br><br>
+<div class="alert alert-success" [hidden]="!savedDraft">
+    {{savedDraft}}
+</div>
+<div class="alert alert-success" [hidden]="!articlePublished">
+    {{articlePublished}}
+</div>
+<div class="alert alert-danger" [hidden]="!some_error">
+    {{some_error}}
+</div>
 
-<ckeditor
-    [editor]="Editor"
-    data="<p>Ciao chiunque tu sia!<br>Puoi scegliere i paragrafi, puoi incorporare immagini, link a video, tabelle ed elenchi numerati e puntati!<br>Buona scrittura ;)</p>"
-    (change)="hasBeenEdited()"
-    >
-</ckeditor>
+<div *ngFor="let mynewsletter of myNewsletters">
+    <ckeditor [editor]="Editor" data={{mynewsletter.content}} (change)="hasBeenEdited($event)"></ckeditor>
+</div>
 <br>
 
-<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" *ngIf="edited" (click)="openWindow(content)">Salva</button>
+<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" *ngIf="edited" (click)="openWindow(content)">Pubblica articolo</button>
+<button type="button" class="btn btn-primary float-left" *ngIf="edited" (click)="saveDraft()">Salva bozza</button>
 
 <!-- Pubblica articolo -->
 <ng-template #content let-modal>
@@ -52,6 +60,23 @@
     </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary" routerLink=".." (click)="modal.close('')">Indietro</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.close('')">Annulla</button>
+    </div>
+</ng-template>
+
+<!-- Cancella bozza -->
+<ng-template #content3 let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Cancellazione bozza</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Stai per cancellare la bozza di articolo. Sei sicuro di voler cancellarla?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="deleteDraftFromServer()">Cancella</button>
         <button type="button" class="btn btn-secondary" (click)="modal.close('')">Annulla</button>
     </div>
 </ng-template>

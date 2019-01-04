@@ -13,12 +13,10 @@ export class BlogComponent implements OnInit {
   ngOnInit() {
   }
 
+  /*
   openWindow(content) {
     this.modalService.open(content);
   }
-
-  deleteArticle() {
-    this.modalService.dismissAll();
-  }
+  */
 
 }

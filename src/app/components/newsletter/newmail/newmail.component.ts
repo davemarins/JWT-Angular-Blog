@@ -4,7 +4,7 @@ import { JarwisService } from 'src/app/services/jarwis.service';
 import { Router } from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
-import { Newsletter } from 'src/app/newsletter';
+import { Newsletter } from 'src/app/Newsletter';
 
 @Component({
   selector: 'app-newmail',

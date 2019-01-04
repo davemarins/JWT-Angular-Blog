@@ -48,6 +48,12 @@
       <form class="form-inline mt-2 mt-md-0">
         <button type="button" style="color: white;" class="nav-link btn btn-danger my-2 my-sm-0" (click)="logout($event)" *ngIf="loggedIn">Logout</button>
       </form>
+      <li>
+        <a class="nav-link" routerLink="subscribe" *ngIf="!loggedIn">Iscriviti</a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="unsubscribe" *ngIf="!loggedIn">Cancella iscrizione</a>
+      </li>
     </ul>
   </div>
 </nav>

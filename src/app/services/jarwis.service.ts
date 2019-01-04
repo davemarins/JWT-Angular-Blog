@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TokenService } from './token.service';
-import { Subscriber } from 'src/app/subscriber';
+import { Subscriber } from 'src/app/Subscriber';
 import { Observable } from 'rxjs';
-import { Newsletter } from 'src/app/newsletter';
+import { Newsletter } from 'src/app/Newsletter';
+import { Article } from '../Article';
 
 @Injectable({
   providedIn: 'root'
@@ -77,5 +78,19 @@ export class JarwisService {
   }
 
   // Blog articles APIs
+
+  getArticleDraft(): Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.baseurl}/getarticledraft`);
+  }
+
+  // Stats
+
+  getSubscribersStats() {
+    return this.http.get(`${this.baseurl}/subscriberstats`);
+  }
+
+  getSubscribersStatsGroupBy() {
+    return this.http.get(`${this.baseurl}/subscriberstatsgroupby`);
+  }
 
 }
