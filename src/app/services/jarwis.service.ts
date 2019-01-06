@@ -83,6 +83,14 @@ export class JarwisService {
     return this.http.get<Article[]>(`${this.baseurl}/getarticledraft`);
   }
 
+  saveArticleDraft(data) {
+    return this.http.post(`${this.baseurl}/savearticledraft`, data);
+  }
+
+  deleteArticleDraft() {
+    return this.http.get(`${this.baseurl}/deletearticledraft`);
+  }
+
   // Stats
 
   getSubscribersStats() {

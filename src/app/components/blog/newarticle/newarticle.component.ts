@@ -5,6 +5,7 @@ import { Article } from 'src/app/Article';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { JarwisService } from 'src/app/services/jarwis.service';
+// import { CKFinder } from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
 
 @Component({
   selector: 'app-newarticle',
@@ -31,6 +32,16 @@ export class NewArticleComponent implements OnInit {
     private jarwis: JarwisService,
     private modalService: NgbModal,
     private router: Router) { }
+
+  /*
+  somefunction() {
+    var path = CKEDITOR.basePath.split('/');
+    path[ path.length-2 ] = 'upload_image';
+    config.filebrowserUploadUrl = path.join('/').replace(/\/+$/, '');
+    // Add plugin
+    config.extraPlugins = 'filebrowser';
+  }
+  */
 
   initDataDraft(data) {
     this.myArticles = data;
@@ -63,6 +74,14 @@ export class NewArticleComponent implements OnInit {
     this.modalService.open(content);
   }
 
+  onFileUploadRequest(event) {
+    console.log(event);
+  }
+
+  onFileUploadResponse(event) {
+    console.log(event);
+  }
+
   resetMessages() {
     this.savedDraft = null;
     this.articlePublished = null;
@@ -91,14 +110,6 @@ export class NewArticleComponent implements OnInit {
 
   // Article publishing part
 
-  handlingSendEmailSuccess(data) {
-    this.articlePublished = 'Newsletter spedita con successo';
-  }
-
-  handlingSendEmailError(error) {
-    this.some_error = 'C\'è stato un problema durante l\'invio della newsletter';
-  }
-
   publishThisArticle() {
     const temp = this.myArticles[0];
     temp.description = this.description;
@@ -108,27 +119,22 @@ export class NewArticleComponent implements OnInit {
     this.resetMessages();
     // To be edited
     this.jarwis.sendNewsletter(temp).subscribe(
-      data => this.handlingSendEmailSuccess(data),
-      error => this.handlingSendEmailError(error)
+      data => this.articlePublished = 'Articolo pubblicato con successo',
+      error => this.some_error = 'C\'è stato un problema durante la pubblicazione dell\'articolo'
     );
     this.edited = false;
   }
 
   // Article Draft part
 
-  handlingDraftSuccess(data) {
-    this.savedDraft = 'Bozza salvata con successo';
-  }
-
-  handlingDraftError(error) {
-    this.some_error = 'C\'è stato un problema durante il salvataggio della bozza';
-  }
-
-  saveDraft() {
+  saveArticleDraft() {
     const temp = this.myArticles[0];
-    this.jarwis.saveNewsletterDraft(temp).subscribe(
-      data => this.handlingDraftSuccess(data),
-      error => this.handlingDraftError(error)
+    temp.description = this.description;
+    temp.title = this.title;
+    temp.draft = true;
+    this.jarwis.saveArticleDraft(temp).subscribe(
+      data => this.savedDraft = 'Bozza salvata con successo',
+      error => this.some_error = 'C\'è stato un problema durante il salvataggio della bozza'
     );
     this.resetMessages();
     this.edited = false;
@@ -136,7 +142,7 @@ export class NewArticleComponent implements OnInit {
   }
 
   deleteDraftFromServer() {
-    this.jarwis.deleteDraft().subscribe(
+    this.jarwis.deleteArticleDraft().subscribe(
       data => this.savedDraft = 'Bozza eliminata con successo',
       error => this.some_error = 'C\'è stato un problema durante la cancellazione della bozza'
     );
